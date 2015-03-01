@@ -38,7 +38,7 @@ class Parties < Array
       self << {
         'party_id' => match[6],
         'name' => party_data[match[6]],
-        'vote_count' => match[7]
+        'vote_count' => match[7].to_f
       }
     end
   end
