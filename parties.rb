@@ -21,7 +21,7 @@ class Parties < Array
       #   Next 4 characters are year
       #   Next 2 characters are month
       #   Next 2 characters are province id
-      #   Next 3 characters community id
+      #   Next 3 characters city id
       #   Next 2 characters are district id
       #   Next 6 characters are party id
       #   Next 8 characters are vote count
@@ -29,8 +29,12 @@ class Parties < Array
       match = s.scan(/(\w{2})(\d{4})(\d{2})(\d{2})(\d{3})(\d{2})(\d{6})(\d{8})/)
       match.flatten!
 
-      # Make sure the province id matches
+      # Make sure the province id and city id matches
       next unless match[3] == data_hash['id']
+      next unless match[4] == data_hash['cid']
+
+      # Don't count parties with 0 votes
+      next unless match[7].to_i > 0
       self << {
         'party_id' => match[6],
         'name' => party_data[match[6]],

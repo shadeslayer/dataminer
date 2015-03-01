@@ -25,6 +25,7 @@ class Province
     @cities = []
     data[data_hash['id']].keys.each do |key|
       data_hash['Name'] = data[data_hash['id']][key]
+      data_hash['cid'] = key
       @cities << City.new(data_hash: data_hash)
     end
   end
