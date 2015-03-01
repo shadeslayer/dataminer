@@ -11,6 +11,6 @@ class Miner
   end
 
   def dump
-    File.write('out.json', JSON.pretty_generate(Oj.dump(self)))
+    File.write('out.json', Oj.dump(self))
   end
 end
