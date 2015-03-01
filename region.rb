@@ -10,7 +10,7 @@ class Region
   # Pass a data hash which contains a Region => Data file mapping
   def initialize(data_hash:)
     @provinces = []
-    data_hash["Provinces"].keys.each do |province|
+    data_hash['Provinces'].keys.each do |province|
       puts "Processing #{data_hash['Provinces'][province]}"
 
       @name = data_hash['Provinces'][province]

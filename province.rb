@@ -43,9 +43,7 @@ class Province
       city.result['parties'].each do |party|
         party_data[party['name']] ||= { 'vote_count' => 0.0 }
         party_data[party['name']].merge!(party) { |key, oldval, newval|
-          if key == 'vote_count'
-            newval += oldval
-          end
+          newval += oldval if key == 'vote_count'
         }
       end
     end
