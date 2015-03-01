@@ -7,7 +7,9 @@ require_relative 'city'
 #    "communities" => []
 #   }
 class Province
+  attr_accessor :name
   attr_accessor :cities
+  attr_accessor :result
 
   def initialize(data_hash:)
     @name = data_hash['Name']
@@ -24,5 +26,39 @@ class Province
       data_hash['cid'] = key
       @cities << City.new(data_hash: data_hash)
     end
+
+    @result = {}
+    @result['parties'] = []
+    total_votes = 0.0
+
+    party_data = {}
+    @cities.each do |city|
+      # Some new cities like Dehesas Viejas haven't held elections yet
+      # Pass over if that's the case
+      next if city.result['parties'][0].nil?
+      total_votes += city.result['parties'][0]['total_votes']
+
+      # Iterate over each city and keep the data of each party in a hash
+      # This is a funky merge written at 6 AM.
+      city.result['parties'].each do |party|
+        party_data[party['name']] ||= { 'vote_count' => 0.0 }
+        party_data[party['name']].merge!(party) { |key, oldval, newval|
+          if key == 'vote_count'
+            newval += oldval
+          end
+        }
+      end
+    end
+
+    total = 0.0
+    party_data.keys.each do |key|
+      party_data[key]['total_votes'] = total_votes
+      party_data[key]['percentage'] = (party_data[key]['vote_count'] / total_votes) * 100
+      #FIXME: This should probably happen above with the merge block
+      party_data[key]['name'] = key
+      @result['parties'] << party_data[key]
+      total += party_data[key]['percentage']
+    end
+    puts "Oh noes! #{total}" if total != 100
   end
 end
