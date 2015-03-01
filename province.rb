@@ -8,12 +8,8 @@ require_relative 'city'
 #   }
 class Province
   attr_accessor :cities
-  attr_reader :vote_data
-  attr_reader :party_data
 
   def initialize(data_hash:)
-    @vote_data = data_hash['vote_data']
-    @party_data = data_hash['party_data']
     @name = data_hash['Name']
     @id = data_hash['id']
     data = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }

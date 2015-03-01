@@ -4,8 +4,8 @@ require_relative 'province'
 # Data representation :
 #   { "Andulucia" => {data} }
 class Region
-  attr_accessor :provinces
   attr_accessor :name
+  attr_accessor :provinces
 
   # Pass a data hash which contains a Region => Data file mapping
   def initialize(data_hash:)
