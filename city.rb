@@ -23,11 +23,12 @@ class City
     @result = {}
     @result['parties'] = []
     parties.each do |party|
+      percentage = (party['vote_count'] / total_votes) * 100
       @result['parties'] << {
         'name' => party['name']['shortName'],
         'total_votes' => total_votes,
         'vote_count' => party['vote_count'],
-        'percentage' => (party['vote_count'] / total_votes) * 100 }
+        'percentage' =>  percentage }
     end
   end
 end

@@ -56,7 +56,7 @@ class Province
       party_data[key]['percentage'] = (party_data[key]['vote_count'] / total_votes) * 100
       #FIXME: This should probably happen above with the merge block
       party_data[key]['name'] = key
-      @result['parties'] << party_data[key]
+      @result['parties'] << party_data[key] unless party_data[key]['percentage'] < 5
       total += party_data[key]['percentage']
     end
     puts "Oh noes! #{total}" if total != 100

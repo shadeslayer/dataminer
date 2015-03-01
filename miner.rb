@@ -11,6 +11,6 @@ class Miner
   end
 
   def dump
-    File.write('out.json', Oj.dump(self))
+    Oj.to_file('out.json', self)
   end
 end
