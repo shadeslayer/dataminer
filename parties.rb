@@ -32,7 +32,6 @@ class Parties < Array
       # Make sure the province id matches
       next unless match[3] == data_hash['id']
       self << {
-        'magic' => match,
         'party_id' => match[6],
         'name' => party_data[match[6]],
         'vote_count' => match[7]
