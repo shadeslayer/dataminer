@@ -11,6 +11,7 @@ class Miner
   end
 
   def dump
+    puts "Start dumping to out.json"
     Oj.to_file('out.json', self)
   end
 end

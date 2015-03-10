@@ -14,15 +14,15 @@ class Province
   def initialize(data_hash:)
     @name = data_hash['Name']
     @id = data_hash['id']
-    data = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    @@data = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
     CSV.foreach('data/15codmun_en.csv') do |row|
       next unless row[0] == data_hash['id']
-      data[row[0]][row[1]] = row[3]
+      @@data[row[0]][row[1]] ||= row[3]
     end
 
     @cities = []
-    data[data_hash['id']].keys.each do |key|
-      data_hash['Name'] = data[data_hash['id']][key]
+    @@data[data_hash['id']].each_key do |key|
+      data_hash['Name'] = @@data[data_hash['id']][key]
       data_hash['cid'] = key
       @cities << City.new(data_hash: data_hash)
     end
@@ -49,7 +49,7 @@ class Province
     end
 
     total = 0.0
-    party_data.keys.each do |key|
+    party_data.each_key do |key|
       party_data[key]['total_votes'] = total_votes
       party_data[key]['percentage'] = (party_data[key]['vote_count'] / total_votes) * 100
       #FIXME: This should probably happen above with the merge block
