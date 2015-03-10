@@ -14,7 +14,7 @@ class Province
   def initialize(data_hash:)
     @name = data_hash['Name']
     @id = data_hash['id']
-    @@data = Hash.new { |h, k| h[k] = Hash.new(&h.default_proc) }
+    @@data = Hash.new { |h, k| h[k] = Hash.new }
     CSV.foreach('data/15codmun_en.csv') do |row|
       next unless row[0] == data_hash['id']
       @@data[row[0]][row[1]] ||= row[3]
